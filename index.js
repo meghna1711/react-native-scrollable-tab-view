@@ -134,6 +134,7 @@ const ScrollableTabView = createReactClass({
       }
     } else {
       if (this.scrollView) {
+      let pageOffset = this.state.currentPage > pageNumber ? this.state.currentPage - pageNumber : pageNumber - this.state.currentPage;
         if (this.props.scrollWithoutAnimation) {
           this.scrollView.getNode().setPageWithoutAnimation(pageNumber);
         } else {
@@ -161,7 +162,9 @@ const ScrollableTabView = createReactClass({
 
   updateSceneKeys({ page, children = this.props.children, callback = () => {}, }) {
     let newKeys = this.newSceneKeys({ previousKeys: this.state.sceneKeys, currentPage: page, children, });
-    this.setState({currentPage: page, sceneKeys: newKeys, }, callback);
+    setTimeout(() => {
+     this.setState({currentPage: page, sceneKeys: newKeys, }, callback);
+    })
   },
 
   newSceneKeys({ previousKeys = [], currentPage = 0, children = this.props.children, }) {
@@ -220,7 +223,7 @@ const ScrollableTabView = createReactClass({
       const scenes = this._composeScenes();
       return <Animated.ScrollView
         horizontal
-        pagingEnabled
+        //pagingEnabled
         automaticallyAdjustContentInsets={false}
         contentOffset={{ x: this.props.initialPage * this.state.containerWidth, }}
         ref={(scrollView) => { this.scrollView = scrollView; }}

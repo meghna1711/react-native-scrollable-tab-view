@@ -98,11 +98,11 @@ const ScrollableTabBar = createReactClass({
         newScrollX = newScrollX >= 0 ? newScrollX : 0;
 
         if (Platform.OS === 'android') {
-            this._scrollView.getNode().scrollTo({x: newScrollX, y: 0, animated: true });
+            this._scrollView.getNode().scrollTo({x: newScrollX, y: 0, animated: true});
         } else {
             const rightBoundScroll = this._tabContainerMeasurements.width - (this._containerMeasurements.width);
             newScrollX = newScrollX > rightBoundScroll ? rightBoundScroll : newScrollX;
-            this._scrollView.scrollTo({x: newScrollX, y: 0, animated: true,});
+            this._scrollView.getNode().scrollTo({x: newScrollX, y: 0, animated: true,});
         }
     },
 
@@ -117,7 +117,7 @@ const ScrollableTabBar = createReactClass({
             const newLineLeft = (pageOffset * nextTabLeft + (1 - pageOffset) * lineLeft);
             const newLineRight = (pageOffset * nextTabRight + (1 - pageOffset) * lineRight);
 
-            if(this.props.scrollWithoutAnimation){
+            if (this.props.scrollWithoutAnimation) {
                 this.state._leftTabUnderline.setValue(newLineLeft)
             } else {
                 Animated.timing(
@@ -131,7 +131,7 @@ const ScrollableTabBar = createReactClass({
             }
             this.state._widthTabUnderline.setValue(newLineRight - newLineLeft);
         } else {
-            if(this.props.scrollWithoutAnimation){
+            if (this.props.scrollWithoutAnimation) {
                 this.state._leftTabUnderline.setValue(lineLeft)
             } else {
                 Animated.timing(
@@ -200,8 +200,8 @@ const ScrollableTabBar = createReactClass({
             this._scrollView = scrollView;
         }}
         onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: 50, }, }, }, ],
-            { useNativeDriver: true,}
+            [{nativeEvent: {contentOffset: {x: 50,},},},],
+            {useNativeDriver: true,}
         )}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
